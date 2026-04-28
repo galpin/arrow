@@ -369,6 +369,14 @@ if(ARROW_BUILD_BENCHMARKS)
 
   add_dependencies(arrow_flight arrow-flight-benchmark)
 
+  # Standalone diagnostic that proves whether the Flight server processes
+  # concurrent RPCs in parallel or serializes them.
+  add_executable(arrow-flight-concurrency-probe flight_concurrency_probe.cc)
+  target_link_libraries(arrow-flight-concurrency-probe
+                        ${ARROW_FLIGHT_TEST_LINK_LIBS} ${GFLAGS_LIBRARIES})
+
+  add_dependencies(arrow_flight arrow-flight-concurrency-probe)
+
 endif(ARROW_BUILD_BENCHMARKS)
 
 if(ARROW_FLIGHT_SQL)
