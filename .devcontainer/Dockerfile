@@ -25,7 +25,8 @@ RUN apt-get update -y -q && \
         pkg-config \
         python3 \
         tzdata \
-        wget && \
+        wget \
+        zlib1g-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
