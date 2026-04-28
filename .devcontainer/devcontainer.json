@@ -1,0 +1,27 @@
+// Devcontainer for building and running the Arrow Flight concurrency probe.
+// See .devcontainer/Dockerfile for the underlying image.
+{
+  "name": "arrow-flight-concurrency-probe",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "workspaceFolder": "/workspaces/arrow",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/arrow,type=bind,consistency=cached",
+  "remoteUser": "root",
+  "containerEnv": {
+    "ARROW_HOME": "/usr/local",
+    "CMAKE_GENERATOR": "Ninja"
+  },
+  // First build pulls and compiles bundled gRPC/Protobuf/gflags; expect
+  // ~15-30 min on first run, then ccache makes rebuilds fast.
+  "postCreateCommand": "echo 'Devcontainer ready. To build the probe: bash .devcontainer/build-probe.sh'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools"
+      ]
+    }
+  }
+}
